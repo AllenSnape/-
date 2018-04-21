@@ -1,0 +1,27 @@
+1.在http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-java-client-419417.html#7372-jmf-2.1.1e-oth-JPR下载JMF
+
+2.用文本编辑器打开jmf*****.bin,修改
+
+	在第267行有一段程式有誤：
+	tail +309 $0 > $outname
+
+	將它改成：
+	tail -n +309 $0 > $outname
+
+3.在终端中输入 sh ./jmf****.bin ,执行shell脚本
+
+4.设置系统变量
+
+如果你的设定档还还很干净，而且你又懂得如何修改，可以看这个：
+export JMFHOME=/home/allensnape/JMF/JMF-2.1.1e  #JMF安装路径
+export CLASSPATH=.:$JMFHOME/lib/jmf.jar:${CLASSPATH}
+export LD_LIBRARY_PATH=$JMFHOME/lib:${LD_LIBRARY_PATH}
+
+
+如果你的设定档已经很乱了，可以参考这个在/etc/profile之下新增设定档：
+export JAVA_HOME=/home/yuru/jdk1.6.0_07
+export JMFHOME=/home/yuru/JMF_211e/JMF-2.1.1e
+export LD_LIBRARY_PATH=$/usr/lib/libLinuxSerialParallel.so:$JMFHOME/lib:$LD_LIBRARY_PATH
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib/ext/comm.jar:$JMFHOME/lib/jmf.jar:$CLASSPATH
+export JAVA_HOME JMFHOME CLASSPATH PATH LD_LIBRARY_PATH

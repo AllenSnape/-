@@ -1,0 +1,71 @@
+1.在官网在下OpenCV,http://nchc.dl.sourceforge.net/project/opencvlibrary/opencv-win/2.4.9/opencv-2.4.9.exe
+
+2.解压到指定文件夹
+
+3.设置系统环境变量,需要重启计算机
+	新建 opencv  解压路径\opencv\build
+	在path中添加 ;解压路径\opencv\build\x86\vc12  注释:注意前面的分号;x86取决于应用程序是32位还是64位的,如果是64位的,就是x64; vc12是对应工具集中的版本,在Visual Studio的项目中查看,项目-属性-配置属性-常规-平台工具集;
+
+4.在 解压路径\opencv 下新建一个VS配置文件 opencv249.props ,用记事本打开,复制下列内容
+
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>$(OPENCV)\include\opencv2;$(OPENCV)\include\opencv;$(OPENCV)\include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Platform)'=='Win32'">$(OPENCV)\x86\vc12\staticlib;$(OPENCV)\x86\vc12\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Platform)'=='X64'">$(OPENCV)\x64\vc12\staticlib;$(OPENCV)\x64\vc12\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(OPENCV)\x86\vc12\bin;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link Condition="'$(Configuration)'=='Debug'">
+      <AdditionalDependencies>$(OPENCV)\x86\vc12\lib\opencv_calib3d249.lib;$(OPENCV)\x86\vc12\lib\opencv_core249.lib;$(OPENCV)\x86\vc12\lib\opencv_features2d249.lib;$(OPENCV)\x86\vc12\lib\opencv_flann249.lib;$(OPENCV)\x86\vc12\lib\opencv_highgui249.lib;$(OPENCV)\x86\vc12\lib\opencv_imgproc249.lib;$(OPENCV)\x86\vc12\lib\opencv_ml249.lib;$(OPENCV)\x86\vc12\lib\opencv_objdetect249.lib;$(OPENCV)\x86\vc12\lib\opencv_photo249.lib;$(OPENCV)\x86\vc12\lib\opencv_stitching249.lib;$(OPENCV)\x86\vc12\lib\opencv_superres249.lib;$(OPENCV)\x86\vc12\lib\opencv_video249.lib;$(OPENCV)\x86\vc12\lib\opencv_videostab249.lib</AdditionalDependencies>
+    </Link>
+    <Link Condition="'$(Configuration)'=='Release'">
+      <AdditionalDependencies>opencv_ts249d.lib;opencv_world249d.lib;opencv_calib3d249d.lib;opencv_core249d.lib;opencv_features2d249d.lib;opencv_flann249d.lib;opencv_highgui249d.lib;opencv_imgcodecs249d.lib;opencv_imgproc249d.lib;opencv_ml249d.lib;opencv_objdetect249d.lib;opencv_photo249d.lib;opencv_shape249d.lib;opencv_stitching249d.lib;opencv_superres249d.lib;opencv_ts249d.lib;opencv_video249d.lib;opencv_videoio249d.lib;opencv_videostab249d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
+
+注释:其中$(OPENCV)是刚才设置的系统变量;在节点 Link Condition="'$(Configuration)'=='Debug'" 下的子节点 AdditionalDependencies 中是对应 解压路径\opencv\build\x86\vc12\lib 中的.lib文件,如果以后版本更替后,需要作出修改
+
+
+5.在VS创建一个 空白 的 win32控制台程序 ,然后再该项目的属性管理器中,右击主节点,选择添加现有属性表,然后将上面的那个文件(opencv249.props)导入
+
+6.回到解决方案资源管理器中的源文件节点下,右击-添加-新建项,新建Program.cpp,然后输入以下代码
+
+#include "cv.h"  
+#include "highgui.h"  
+
+void main()
+{
+	int example(char* img_path);
+	example("IMG_0006.JPG");
+}
+
+int example(char* img_path)
+{
+	IplImage* pImg; //声明IplImage指针  
+
+	//载入图像  
+	if ((pImg = cvLoadImage(img_path, 1)) != 0)
+	{
+		cvNamedWindow("Image", 1);//创建窗口  
+		cvShowImage("Image", pImg);//显示图像  
+
+		cvWaitKey(0); //等待按键  
+
+		cvDestroyWindow("Image");//销毁窗口  
+		cvReleaseImage(&pImg); //释放图像  
+		return 0;
+	}
+
+	return -1;
+}
+
+注释:测试是否成功运行,如果否,继续往下读
+
+7.如果报错是缺失*.dll文件,则在 解压路径\opencv\build\x86\vc12\bin 下找到相应的dll文件,将其复制到C:\Windows\System32(如果是64位系统,同时也要将dll文件放入C:\Windows\SysWOW64下),然后再cmd(或者使用win+R)中输入 regsvr32 *.dll (*为dll文件名).如果提示"...找不到入口...",忽略,然后再回到VS界面再次运行
+
