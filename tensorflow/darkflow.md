@@ -1,4 +1,4 @@
-# 安装OpenCV (在Ubuntu 16.04上) [引用的教程](https://blog.csdn.net/yudiemiaomiao/article/details/72780790) [Ubuntu更改至阿里云源](https://github.com/AllenSnape/notes/Ubuntu.md)
+# 安装OpenCV (在Ubuntu 16.04上) [引用的教程](https://blog.csdn.net/yudiemiaomiao/article/details/72780790) [Ubuntu更改至阿里云源](https://github.com/AllenSnape/notes/blob/master/Ubuntu.md)
 
 ## 1.必要包
 
@@ -35,7 +35,7 @@ sudo apt-get install libatlas-base-dev gfortran
 sudo apt-get install ffmpeg
 ```
 
-## 2.下载OpenCV (或者直接clone[OpenCV项目](https://github.com/opencv) [Git代理设置](https://github.com/AllenSnape/notes/git.md)) (自行选择版本)
+## 2.下载OpenCV (或者直接clone[OpenCV项目](https://github.com/opencv) [Git代理设置](https://github.com/AllenSnape/notes/blob/master/git.md)) (自行选择版本)
 ```
 wget https://github.com/opencv/opencv/archive/3.2.0.zip
 wget https://github.com/opencv/opencv_contrib/archive/3.2.0.zip
