@@ -1,0 +1,32 @@
+//¼ÌµçÆ÷ÉÏ on relay-board
+//GND-ºÚ black
+//IN1-°× white
+//IN2-»Ò gray
+//IN3-×Ï purple
+//IN4-À¶ blue
+//IN5-ÂÌ green
+//IN6-»Æ yellow
+//IN7-³È orange
+//IN8-×Ø brown
+//VCC-ºì red
+
+//Ê÷Ý®ÅÉÉÏ on pi
+//ºÚ black-GND
+//ºì red-5V
+//×Ï purple-8
+//À¶ blue-9
+//ÂÌ green-7
+//»Æ yellow-0
+//³È orange-2
+//×Ø brown-3
+//°× white-15
+//»Ò gray-16
+
+digitalWrite(in1, HIGH);
+	digitalWrite(in2, HIGH);
+	digitalWrite(in3, HIGH);
+	digitalWrite(in4, HIGH);
+	digitalWrite(in5, HIGH);
+	digitalWrite(in6, HIGH);
+	digitalWrite(in7, HIGH);
+	digitalWrite(in8, HIGH);
