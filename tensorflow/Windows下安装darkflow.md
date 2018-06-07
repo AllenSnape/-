@@ -11,7 +11,7 @@
 
 ----------------------------
 
-## 安装Windows编译器(需要Node.js的npm)
+## 安装Windows编译器(需要Node.js的npm) (下面编译那步出错时再弄这个)
 ### 安装Node.js, 已经安装了的可以跳过
 1. 在[Node.js官网](http://nodejs.cn/download/)下载安装对应版本即可
 2. 安装[Windows-Build-Tools](https://www.npmjs.com/package/windows-build-tools), npm install --global --production windows-build-tools
